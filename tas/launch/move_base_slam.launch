@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<launch>
+  <master auto="start"/>
+  <param name="/use_sim_time" value="false"/>
+  
+ 
+  <!-- Original Move Base-->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
+    <rosparam file="$(find tas)/launch/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find tas)/launch/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find tas)/launch/config/move_base/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find tas)/launch/config/move_base/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find tas)/launch/config/move_base/base_local_planner_params.yaml" command="load" />
+
+  <param name="planner_frequency" value="10.0"/>
+
+ 
+  </node>
+
+  <!-- Run trajectory control -->
+  <node pkg = "tas_autonomous_control" type="tas_autonomous_control_node" name="tas_autonomous_control_node" output="screen"/>
+
+  <!-- Run rviz -->
+  <!--node name="rviz" pkg="rviz" type="rviz" args="-d $(find rc_car_drift)/rviz_config.vcg">
+</node-->
+
+
+</launch>
