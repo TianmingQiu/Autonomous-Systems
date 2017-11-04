@@ -9,6 +9,8 @@
 
   <!-- run wii joystick-->
   <node respawn="true" pkg="wiimote"  type="wiimote_node.py" name="wiimote" output="screen">
+	<param name="bluetooth_addr" value="8C:56:C5:D6:6D:73"/>
+	<param name="pair_timeout" value="5"/>
 	<remap from="imu/data" to="wii_imu/data"/>
 	<remap from="imu/is_calibrated" to="wii_imu/is_calibrated" />
   </node>
@@ -17,26 +19,27 @@
   <node pkg = "wii_control" type="wii_node" name="wii_control" output="screen"/>
 
  <!-- Run laserscanner at the front -->
-  <node name="hokuyo_front" pkg="hokuyo_node" type="hokuyo_node" respawn="false" output="screen">
+  <node name="hokuyo_front" pkg="urg_node" type="urg_node" respawn="false" output="screen">
     <!-- Starts up faster, but timestamps will be inaccurate. --> 
-    <param name="calibrate_time" type="bool" value="false"/> 
     <!-- Set the port to connect to here -->
-    <param name="port" type="string" value="/dev/hokuyo_front"/> 
-    <param name="intensity" type="bool" value="false"/>
+    <param name="serial_port" value="/dev/hokuyo_front"/>
+    <param name="frame_id" value="laser"/> 
+    <param name="calibrate_time" value="false"/>
+    <param name="publish_intensity" value="false"/>
   </node>
 
  <!-- Run laserscanner at the back -->
-  <node name="hokuyo_back" pkg="hokuyo_node" type="hokuyo_node" respawn="false" output="screen">
+  <node name="hokuyo_back" pkg="urg_node" type="urg_node" respawn="false" output="screen">
     <!-- Starts up faster, but timestamps will be inaccurate. --> 
-    <param name="calibrate_time" type="bool" value="false"/> 
     <!-- Set the port to connect to here -->
-    <param name="port" type="string" value="/dev/hokuyo_back"/> 
-    <param name="intensity" type="bool" value="false"/>
+    <param name="serial_port" value="/dev/hokuyo_back"/>
+    <param name="frame_id" value="laser_back"/> 
+    <param name="calibrate_time" value="false"/>
+    <param name="publish_intensity" value="false"/> 
     <remap from="scan" to="scan_back" />
   </node>
 
-
- <!-- Run xsens driver -->
+ <!-- Commented:Run xsens driver 
   <arg name="frame_id" default="/imu"/>
   <arg name="frame_local" default="ENU"/>
   <arg name="frame_local_imu" default="ENU"/>
@@ -45,7 +48,14 @@
 	<param name="frame_local" value="$(arg frame_local)"/>
 	<param name="frame_local_imu" value="$(arg frame_local_imu)"/>
   </node>
+ -->
 
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu" args="-0.28 0.0 0.15 0.0 0.0 0.0 /base_link /base_imu 40" />
+  <!--(Static) transformation for relation between laser frame and base_link frame -->
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.28 0.0 0.18 0.0 0.0 0.0 /base_link /laser 40" />
 
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_back_laser" args="-0.28 0.0 0.10 0.0 0.0 0.0 /base_link /laser_back 40" />
+
+ <!-- Commented:IMU static transformation
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu" args="-0.20 0.0 0.15 0.0 0.0 0.0 /base_link /base_imu 40" />
+ -->
 </launch>
