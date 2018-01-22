@@ -8,8 +8,7 @@
 #include <move_base_msgs/MoveBaseActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <sensor_msgs/LaserScan.h>
-#include <cmath>
-#include <vector>
+
 
 using namespace std;
 
@@ -38,25 +37,36 @@ void feedbackCb(const move_base_msgs::MoveBaseFeedbackConstPtr& feedback) {
 
 
 void processLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan_data){
-    double scan_raw_data[1081];
+    /*double scan_raw_data[1081];
     for(int i = 0; i<1081; i ++){
         scan_raw_data[i] = scan_data->ranges[i];
-    }
+    }*/
 
 
     double slalom_position;
     double scan_data_def[720];
-    //vector <double> slalom_pos;
+
+    // Calculate the differnce squence (remove the head and tail, only keep the 180 degrees data)
     for(int i = 0; i < 721; i++){
         int scan_bias = 180;
-        scan_data_def[i] = abs(scan_raw_data[scan_bias + i + 1] - scan_raw_data[scan_bias + i]);}
-        /*if (scan_data_def[i] > 8.0){
-            slalom_pos.push_back(scan_raw_data[i]);
+        scan_data_def[i] = scan_data->ranges[scan_bias + i + 1] - scan_data->ranges[scan_bias + i];
+    }
+    
+    double max = scan_data_def[0];
+    double min = scan_data_def[0];
+    
+    // Find the max and min
+    for(int i = 0; i < 721; i++){
+        if (scan_data_def[i] > max){
+            max = scan_data_def[i];
+        }
+        if (scan_data_def[i] < min){
+            min = scan_data_def[i];
         }
     }
-    slalom_position = 0.5 * (slalom_pos[0] + slalom_pos[1]);
-    cout << "hi " << slalom_position <<endl;*/
-        cout << "finished "<<endl;
+    
+    slalom_position = 0.5 * (max + min);
+    cout << "Distance between car and sallom: " << slalom_postion << endl;
 }
 
 
@@ -70,33 +80,11 @@ int main(int argc, char** argv){
     /********************************************/
 
     ros::NodeHandle n;
-    cout << "hi " <<endl;
-    cout << "hi " <<endl;
-    cout << "hi " <<endl;
-    cout << "hi " <<endl;
-    cout << "hi " <<endl;
-    cout << "hi " <<endl;
-    cout << "hi " <<endl;
-    cout << "hi " <<endl;
-    cout << "hi " <<endl;
-    cout << "hi " <<endl;
-    cout << "hi " <<endl;
-    cout << "hi " <<endl;
+
     ros::Subscriber scan_sub = n.subscribe("/scan", 1000, processLaserScan);
     sleep(1);
     ros::spinOnce();
-    cout<<"bye"<<endl;
-    cout<<"bye"<<endl;
-    cout<<"bye"<<endl;
-    cout<<"bye"<<endl;
-    cout<<"bye"<<endl;
-    cout<<"bye"<<endl;
-    cout<<"bye"<<endl;
-    cout<<"bye"<<endl;
-    //scan_sub.shutdown();
 
-
-    //scan_sub.shutdown();
 
     /********************************************/
 
