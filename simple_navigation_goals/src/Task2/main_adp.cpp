@@ -11,6 +11,7 @@
 #include <tf/transform_listener.h>
 #include "geometry_msgs/Pose.h"
 #include "tf/tf.h"
+#include "tf/transform_listener.h"
 
 
 using namespace std;
@@ -95,14 +96,14 @@ int main(int argc, char** argv){
     slalom_position.orientation.w = 1;
 
     // based on frame /map:
-    geometry_msgs::Pose slalom_position_base;
-    slalom_position_base.position.x = 0;
-    slalom_position_base.position.y = 0;
-    slalom_position_base.position.z = 0;
-    slalom_position_base.orientation.x = 0;
-    slalom_position_base.orientation.y = 0;
-    slalom_position_base.orientation.z = 0.692;
-    slalom_position_base.orientation.w = 0.722;
+    geometry_msgs::Pose slalom_position_map;
+    slalom_position_map.position.x = 0;
+    slalom_position_map.position.y = 0;
+    slalom_position_map.position.z = 0;
+    slalom_position_map.orientation.x = 0;
+    slalom_position_map.orientation.y = 0;
+    slalom_position_map.orientation.z = 0.692;
+    slalom_position_map.orientation.w = 0.722;
 
     ros::NodeHandle n;
 
@@ -116,8 +117,6 @@ int main(int argc, char** argv){
     // Create tf listener (from laser to base_link):
     tf::TransformListener tf_listener;
 
-    int count = 5;
-
     ros::Rate rate(10.0);
     while (n.ok()){
         tf::StampedTransform transform;
@@ -129,63 +128,55 @@ int main(int argc, char** argv){
             ros::Duration(1.0).sleep();
         }
 
-        slalom_position_base.position.x = slalom_position.position.x + transform.getOrigin().x();
-        slalom_position_base.position.y = slalom_position.position.y + transform.getOrigin().y();
+        //slalom_position_map = transform.inverse()*slalom_position;
 
         rate.sleep();
 
-        cout << "test" << slalom_position_base << endl;
-
-        count--;
-
-        if (count == 0)
-            break;
+        break; //???
     }
 
     /*******************************************/
 
-    cout << slalom_position_base << endl;
-
     // Calculate the waypoints accoding to the above computed coordinate:
     // Orientation of the intermediate goals are kept unchanged and parallel to the X-axis of frame /map;
     geometry_msgs::Pose waypoint1;
-    waypoint1.position.x = slalom_position_base.position.x;
-    waypoint1.position.y = slalom_position_base.position.y + 0.75; // set at the middle between 1st and 2nd slalom
+    waypoint1.position.x = slalom_position_map.position.x;
+    waypoint1.position.y = slalom_position_map.position.y + 0.75; // set at the middle between 1st and 2nd slalom
     waypoint1.position.z = 0.000;
     waypoint1.orientation.x = 0;
     waypoint1.orientation.y = 0;
-    waypoint1.orientation.z = slalom_position_base.orientation.z;
-    waypoint1.orientation.w = slalom_position_base.orientation.w;
+    waypoint1.orientation.z = slalom_position_map.orientation.z;
+    waypoint1.orientation.w = slalom_position_map.orientation.w;
     waypoints.push_back(waypoint1);
 
     geometry_msgs::Pose waypoint2;
-    waypoint2.position.x = slalom_position_base.position.x;
+    waypoint2.position.x = slalom_position_map.position.x;
     waypoint2.position.y = waypoint1.position.y + 1.50; // translation with value of 1.50m to next goal
     waypoint2.position.z = 0.000;
     waypoint2.orientation.x = 0;
     waypoint2.orientation.y = 0;
-    waypoint2.orientation.z = slalom_position_base.orientation.z;
-    waypoint2.orientation.w = slalom_position_base.orientation.w;
+    waypoint2.orientation.z = slalom_position_map.orientation.z;
+    waypoint2.orientation.w = slalom_position_map.orientation.w;
     waypoints.push_back(waypoint2);
 
     geometry_msgs::Pose waypoint3;
-    waypoint3.position.x = slalom_position_base.position.x;
+    waypoint3.position.x = slalom_position_map.position.x;
     waypoint3.position.y = waypoint2.position.y + 1.50; // translation with value of 1.50m to next goal
     waypoint3.position.z = 0.000;
     waypoint3.orientation.x = 0;
     waypoint3.orientation.y = 0;
-    waypoint3.orientation.z = slalom_position_base.orientation.z;
-    waypoint3.orientation.w = slalom_position_base.orientation.w;
+    waypoint3.orientation.z = slalom_position_map.orientation.z;
+    waypoint3.orientation.w = slalom_position_map.orientation.w;
     waypoints.push_back(waypoint3);
 
     geometry_msgs::Pose waypoint4;
-    waypoint4.position.x = slalom_position_base.position.x;
+    waypoint4.position.x = slalom_position_map.position.x;
     waypoint4.position.y = waypoint3.position.y + 1.50; // translation with value of 1.50m to next goal
     waypoint4.position.z = 0.000;
     waypoint4.orientation.x = 0;
     waypoint4.orientation.y = 0;
-    waypoint4.orientation.z = slalom_position_base.orientation.z;
-    waypoint4.orientation.w = slalom_position_base.orientation.w;
+    waypoint4.orientation.z = slalom_position_map.orientation.z;
+    waypoint4.orientation.w = slalom_position_map.orientation.w;
     waypoints.push_back(waypoint4);
 
     

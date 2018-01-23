@@ -16,12 +16,12 @@
 	  <param name="global_frame_id" value="map"/>
 
 	  <!-- Parameters for initial pose-->
-	  <param name="initial_pose_x" value="12.00"/>
-	  <param name="initial_pose_y" value="19.00"/>
-	  <param name="initial_pose_a" value="4.5"/>
-	  <param name="initial_cov_xx" value="10"/>
-	  <param name="initial_cov_yy" value="10"/>
-	  <param name="initial_cov_aa" value="10"/>
+	  <param name="initial_pose_x" value="-5.594"/>
+	  <param name="initial_pose_y" value="0.406"/>
+	  <param name="initial_pose_a" value="0"/>
+	  <param name="initial_cov_xx" value="0.25"/>
+	  <param name="initial_cov_yy" value="0.25"/>
+	  <param name="initial_cov_aa" value="0.0685"/>
 
 
 	  <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
@@ -74,6 +74,9 @@
     <rosparam file="$(find tas)/launch/config/move_base/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find tas)/launch/config/move_base/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find tas)/launch/config/move_base/base_local_planner_params.yaml" command="load" />
+
+      <!-- Add teb local planner -->
+      <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS"/>
   </node>
 
   <!-- Run trajectory control -->
