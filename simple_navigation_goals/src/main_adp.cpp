@@ -170,7 +170,7 @@ int main(int argc, char** argv){
 
     /*******************************************/
     // In the long corridor, use:
-    slalom_position_map.position.x = car_map_x + slalom_position.position.x + 0.28;
+    slalom_position_map.position.x = car_map_x + slalom_position.position.x - 0.28;
     slalom_position_map.position.y = car_map_y + slalom_position.position.y;
 
 
@@ -180,7 +180,7 @@ int main(int argc, char** argv){
     // Calculate the waypoints accoding to the above computed coordinate:
     // Orientation of the intermediate goals are kept unchanged and parallel to the X-axis of frame /map;
     geometry_msgs::Pose waypoint1;
-    waypoint1.position.x = slalom_position_map.position.x +0.75;
+    waypoint1.position.x = slalom_position_map.position.x + 0.75;
     waypoint1.position.y = slalom_position_map.position.y; // set at the middle between 1st and 2nd slalom
     waypoint1.position.z = 0.000;
     waypoint1.orientation.x = 0;
@@ -190,7 +190,7 @@ int main(int argc, char** argv){
     waypoints.push_back(waypoint1);
 
     geometry_msgs::Pose waypoint2;
-    waypoint2.position.x = waypoint1.position.x + 1.50;
+    waypoint2.position.x = waypoint1.position.x +1.50;
     waypoint2.position.y = slalom_position_map.position.y; // translation with value of 1.50m to next goal
     waypoint2.position.z = 0.000;
     waypoint2.orientation.x = 0;
