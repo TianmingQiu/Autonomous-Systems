@@ -60,7 +60,7 @@ int main(int argc, char** argv){
     waypoint2.orientation.w = 1;
     waypoints.push_back(waypoint2);
 
-    geometry_msgs::Pose waypoint3;//close to the glass gate
+    geometry_msgs::Pose waypoint3;//close to the glass door
     waypoint3.position.x = 15.233;
     waypoint3.position.y = 0.555;
     waypoint3.position.z = 0.000;

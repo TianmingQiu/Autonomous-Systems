@@ -76,7 +76,9 @@
     <rosparam file="$(find tas)/launch/config/move_base/base_local_planner_params.yaml" command="load" />
 
       <!-- Add teb local planner -->
+      <!--
       <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS"/>
+      -->
   </node>
 
   <!-- Run trajectory control -->
