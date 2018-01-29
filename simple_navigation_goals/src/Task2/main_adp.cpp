@@ -10,13 +10,15 @@
 #include <sensor_msgs/LaserScan.h>
 #include <tf/transform_listener.h>
 #include "geometry_msgs/Pose.h"
+#include "geometry_msgs/PoseWithCovarianceStamped.h"
 #include "tf/tf.h"
-#include "tf/transform_listener.h"
 
 
 using namespace std;
 
 geometry_msgs::Pose slalom_position;
+double car_map_x = 0.0;
+double car_map_y = 0.0;
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
@@ -51,28 +53,41 @@ void processLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan_data){
 
     geometry_msgs::Pose slalom_position;
     double scan_data_def[720];
+    int scan_bias = 180;
 
     // Calculate the differnce squence (remove the head and tail, only keep the 180 degrees data)
     for(int i = 0; i < 721; i++){
-        int scan_bias = 180;
+        
         scan_data_def[i] = scan_data->ranges[scan_bias + i + 1] - scan_data->ranges[scan_bias + i];
     }
     
     double max = scan_data_def[0];
     double min = scan_data_def[0];
+    double max_dist = scan_data->ranges[0];
+    double min_dist = scan_data->ranges[0];
     
     // Find the max and min
     for(int i = 0; i < 721; i++){
         if (scan_data_def[i] > max){
             max = scan_data_def[i];
+            max_dist = scan_data->ranges[scan_bias + i];
         }
         if (scan_data_def[i] < min){
             min = scan_data_def[i];
+            min_dist = scan_data->ranges[scan_bias + i + 1];
         }
     }
     
-    slalom_position.position.y = 0.5 * (max + min);
-    cout << "Distance between laser scanner and slalom_position:" << slalom_position << endl;
+    slalom_position.position.x = 0.5 * (max_dist + min_dist);
+    cout << "Distance between laser scanner and slalom_position:" << slalom_position.position.x << endl;
+}
+
+
+void map_frame(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr& initial_pose){
+	car_map_x = initial_pose->pose.pose.position.x;
+	car_map_y = initial_pose->pose.pose.position.y;
+	cout << "car initialpose x: " << initial_pose->pose.pose.position.x << endl;
+	cout << "car initialpose y: " << initial_pose->pose.pose.position.y << endl;
 }
 
 
@@ -102,40 +117,65 @@ int main(int argc, char** argv){
     slalom_position_map.position.z = 0;
     slalom_position_map.orientation.x = 0;
     slalom_position_map.orientation.y = 0;
-    slalom_position_map.orientation.z = 0.692;
-    slalom_position_map.orientation.w = 0.722;
+    slalom_position_map.orientation.z = 0.692; //0.692
+    slalom_position_map.orientation.w = 0.722; //0.722
+
+    // 
 
     ros::NodeHandle n;
 
     ros::Subscriber scan_sub = n.subscribe("/scan", 1000, processLaserScan);
+
     sleep(1);
+    ros::spinOnce();
+    ros::Subscriber map_sub = n.subscribe("/initialpose", 1000, map_frame);
+
+    sleep(30);
     ros::spinOnce();
 
     /********************************************/
 
     /*******************************************/
     // Create tf listener (from laser to base_link):
-    tf::TransformListener tf_listener;
+    /*tf::TransformListener tf_listener;
+
+    int count = 5;
 
     ros::Rate rate(10.0);
     while (n.ok()){
         tf::StampedTransform transform;
         try{
-            tf_listener.lookupTransform("/map","/laser",ros::Time(0),transform);
+            tf_listener.lookupTransform("/base_link","/laser",ros::Time(0),transform);
         }
         catch (tf::TransformException ex){
             ROS_ERROR("%s",ex.what());
             ros::Duration(1.0).sleep();
         }
 
-        //slalom_position_map = transform.inverse()*slalom_position;
+        // In the long corridor, use:
+        slalom_position_map.position.x = car_map_x + slalom_position.position.x + transform.getOrigin().x();
+        slalom_position_map.position.y = car_map_y + slalom_position.position.y + transform.getOrigin().y();
+
+        // In the middle corridor, use:
+        //slalom_position_map.position.x = car_map_y + slalom_position.position.x + transform.getOrigin().x();
+        //slalom_position_map.position.y = car_map_x + slalom_position.position.y + transform.getOrigin().y();
 
         rate.sleep();
 
-        break; //???
-    }
+        count--;
+
+        if (count == 0)
+            break;
+    }*/
 
     /*******************************************/
+    // In the long corridor, use:
+    slalom_position_map.position.y = car_map_y + slalom_position.position.x - 0.28;
+    slalom_position_map.position.x = car_map_x + slalom_position.position.y;
+
+
+    cout << "slalom_position_map: " << slalom_position_map << endl;
+
 
     // Calculate the waypoints accoding to the above computed coordinate:
     // Orientation of the intermediate goals are kept unchanged and parallel to the X-axis of frame /map;

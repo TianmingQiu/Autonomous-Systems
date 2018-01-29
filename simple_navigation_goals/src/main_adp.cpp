@@ -117,8 +117,8 @@ int main(int argc, char** argv){
     slalom_position_map.position.z = 0;
     slalom_position_map.orientation.x = 0;
     slalom_position_map.orientation.y = 0;
-    slalom_position_map.orientation.z = 0; //0.692
-    slalom_position_map.orientation.w = 1; //0.722
+    slalom_position_map.orientation.z = 0.692; //0.692
+    slalom_position_map.orientation.w = 0.722; //0.722
 
     // 
 
@@ -170,8 +170,8 @@ int main(int argc, char** argv){
 
     /*******************************************/
     // In the long corridor, use:
-    slalom_position_map.position.x = car_map_x + slalom_position.position.x - 0.28;
-    slalom_position_map.position.y = car_map_y + slalom_position.position.y;
+    slalom_position_map.position.y = car_map_y + slalom_position.position.x - 0.28;
+    slalom_position_map.position.x = car_map_x + slalom_position.position.y;
 
 
     cout << "slalom_position_map: " << slalom_position_map << endl;
@@ -180,8 +180,8 @@ int main(int argc, char** argv){
     // Calculate the waypoints accoding to the above computed coordinate:
     // Orientation of the intermediate goals are kept unchanged and parallel to the X-axis of frame /map;
     geometry_msgs::Pose waypoint1;
-    waypoint1.position.x = slalom_position_map.position.x + 0.75;
-    waypoint1.position.y = slalom_position_map.position.y; // set at the middle between 1st and 2nd slalom
+    waypoint1.position.x = slalom_position_map.position.x;
+    waypoint1.position.y = slalom_position_map.position.y + 0.75; // set at the middle between 1st and 2nd slalom
     waypoint1.position.z = 0.000;
     waypoint1.orientation.x = 0;
     waypoint1.orientation.y = 0;
@@ -190,8 +190,8 @@ int main(int argc, char** argv){
     waypoints.push_back(waypoint1);
 
     geometry_msgs::Pose waypoint2;
-    waypoint2.position.x = waypoint1.position.x +1.50;
-    waypoint2.position.y = slalom_position_map.position.y; // translation with value of 1.50m to next goal
+    waypoint2.position.x = slalom_position_map.position.x;
+    waypoint2.position.y = waypoint1.position.y + 1.50; // translation with value of 1.50m to next goal
     waypoint2.position.z = 0.000;
     waypoint2.orientation.x = 0;
     waypoint2.orientation.y = 0;
@@ -200,8 +200,8 @@ int main(int argc, char** argv){
     waypoints.push_back(waypoint2);
 
     geometry_msgs::Pose waypoint3;
-    waypoint3.position.x = waypoint2.position.x + 1.50;
-    waypoint3.position.y = slalom_position_map.position.y; // translation with value of 1.50m to next goal
+    waypoint3.position.x = slalom_position_map.position.x;
+    waypoint3.position.y = waypoint2.position.y + 1.50; // translation with value of 1.50m to next goal
     waypoint3.position.z = 0.000;
     waypoint3.orientation.x = 0;
     waypoint3.orientation.y = 0;
@@ -210,8 +210,8 @@ int main(int argc, char** argv){
     waypoints.push_back(waypoint3);
 
     geometry_msgs::Pose waypoint4;
-    waypoint4.position.x = waypoint3.position.x + 1.50;
-    waypoint4.position.y = slalom_position_map.position.y; // translation with value of 1.50m to next goal
+    waypoint4.position.x = slalom_position_map.position.x;
+    waypoint4.position.y = waypoint3.position.y + 1.50; // translation with value of 1.50m to next goal
     waypoint4.position.z = 0.000;
     waypoint4.orientation.x = 0;
     waypoint4.orientation.y = 0;
