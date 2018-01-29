@@ -37,12 +37,12 @@ void feedbackCb(const move_base_msgs::MoveBaseFeedbackConstPtr& feedback) {
  * Main function
  */
 int main(int argc, char** argv){
-    ros::init(argc, argv, "simple_navigation_goals"); // init and set name
+    ros::init(argc, argv, "t2middle_navigation_goals"); // init and set name
     std::vector<geometry_msgs::Pose> waypoints; // vector of goals, with position and orientation
 
-    geometry_msgs::Pose waypoint1;//left to the first marker
-    waypoint1.position.x = 16;
-    waypoint1.position.y = 7.154;
+    geometry_msgs::Pose waypoint1;//middle between the first and second cones
+    waypoint1.position.x = 17;
+    waypoint1.position.y = 7.975;
     waypoint1.position.z = 0.000;
     waypoint1.orientation.x = 0;
     waypoint1.orientation.y = 0;
@@ -50,9 +50,9 @@ int main(int argc, char** argv){
     waypoint1.orientation.w = 0.722;
     waypoints.push_back(waypoint1);
 
-    geometry_msgs::Pose waypoint2;//right to the second marker
-    waypoint2.position.x = 18;
-    waypoint2.position.y = 8.808;
+    geometry_msgs::Pose waypoint2;//middle between the second and third cones
+    waypoint2.position.x = 17;
+    waypoint2.position.y = 9.919;
     waypoint2.position.z = 0.0;
     waypoint2.orientation.x = 0;
     waypoint2.orientation.y = 0;
@@ -60,9 +60,9 @@ int main(int argc, char** argv){
     waypoint2.orientation.w = 0.723;
     waypoints.push_back(waypoint2);
 
-    geometry_msgs::Pose waypoint3;//left to the third marker
-    waypoint3.position.x = 16;
-    waypoint3.position.y = 11.032;
+    geometry_msgs::Pose waypoint3;//middle between the third and fourth cones
+    waypoint3.position.x = 17;
+    waypoint3.position.y = 11.247; //11.547
     waypoint3.position.z = 0.000;
     waypoint3.orientation.x = 0;
     waypoint3.orientation.y = 0;
@@ -70,9 +70,9 @@ int main(int argc, char** argv){
     waypoint3.orientation.w = 0.722;
     waypoints.push_back(waypoint3);
 
-    geometry_msgs::Pose waypoint4;//right to the fourth marker
-    waypoint4.position.x = 18;
-    waypoint4.position.y = 12.062;
+    geometry_msgs::Pose waypoint4;//middle after the fourth cone
+    waypoint4.position.x = 17;
+    waypoint4.position.y = 12.562;
     waypoint4.position.z = 0.000;
     waypoint4.orientation.x = 0;
     waypoint4.orientation.y = 0;

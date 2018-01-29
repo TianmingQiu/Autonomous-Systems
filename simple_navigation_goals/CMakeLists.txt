@@ -106,7 +106,8 @@ include_directories(
 ## Declare a cpp executable
 add_executable(simple_navigation_goals_node src/main.cpp)
 add_executable(adaptive_navigation_goals_node src/main_adp.cpp)
-add_executable(t2s_navigation_goals_node src/main_t2s.cpp)
+add_executable(t2middle_navigation_goals_node src/main_t2middle.cpp)
+add_executable(t2side_navigation_goals_node src/main_t2side.cpp)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(simple_navigation_goals_node simple_navigation_goals_generate_messages_cpp)
@@ -118,7 +119,10 @@ target_link_libraries(simple_navigation_goals_node
 target_link_libraries(adaptive_navigation_goals_node
   ${catkin_LIBRARIES}
 )
-target_link_libraries(t2s_navigation_goals_node
+target_link_libraries(t2middle_navigation_goals_node
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(t2side_navigation_goals_node
   ${catkin_LIBRARIES}
 )
 #############
