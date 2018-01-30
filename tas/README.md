@@ -1,4 +1,4 @@
-# TAS Package
+# Package tas
 
 This package contains the roslaunch files about navigation and the files concering the configuration of the system.
 
