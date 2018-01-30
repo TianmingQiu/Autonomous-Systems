@@ -4,7 +4,7 @@ Tuesday, 30. January 2018
 
 Leture in TU MUnich in winter semester 2017/18
 
-Supvisor: [ PD Dr.-Ing. habil. Dirk Wollherr ](https://www.lsr.ei.tum.de/en/team/dozenten/dirk-wollherr/)
+Supvisor: [ PD Dr.-Ing. habil. Dirk Wollherr ](https://www.lsr.ei.tum.de/en/team/dozenten/dirk-wollherr/)  
 Tutor: [M.Sc. Khoi Hoang Dinh](https://www.lsr.ei.tum.de/?id=419), and [M.Sc. Zengjie Zhang](https://www.lsr.ei.tum.de/en/team/wissenschaftliche-mitarbeiter/zengjie-zhang/)
 
 **Group 12: Tianming Qiu, Zhangyi Hu**
@@ -34,7 +34,7 @@ It includes several nodes:
 ## Contribution:
 
 | Contribution      | Tianming Qiu        | Zhangyi Hu  |
-| ------------- |:-------------:| -----:|
+| ------------- |:-------------:| :-----:|
 | Map Modification   | +++ | + |
 | Navigation through Intermediate Goals   | +     | ++ |
 |Setting Wayside Landmarks | +    |  ++|
