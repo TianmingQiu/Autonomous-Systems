@@ -53,10 +53,27 @@ configuration file for the new map (e.g., New_map.pgm and New_map.yaml).
 
 ## Folder move_base
 
-This folder contains configuration files for the costmaps and the local planner.
+This folder consists of configuration files for the costmaps and the local planner.
 
-All these configuration files 
+These configuration files contain detailed parameters which users can change to their 
+desired values according to the environment.
 
+Here is a tuning guide for users: 
+[ROS Navigation Tuning Guide](http://kaiyuzheng.me/documents/navguide.pdf)
+
+Based on this tuning guide, users can get better understanding of the important parameters 
+and get started more easily.
+
+## Folder rviz
+
+This folder mainly contains the rviz file which is loaded when the user wants to 
+visualize the map and the real-time localization of the car in RViz.
+
+## What we have done
+
+In this package we added a new map which was recorded by ourselves, and we also 
+tuned the parameters in those four configuration files concerning costmaps and local 
+planners, in order to realize successful and smooth autonomous driving on our car.
 
 
 
