@@ -80,56 +80,6 @@ int main(int argc, char** argv){
     waypoint4.orientation.w = 0.702;
     waypoints.push_back(waypoint4);
 
-    /*geometry_msgs::Pose waypoint5;//enter the room straightly
-    waypoint5.position.x = 17.933;
-    waypoint5.position.y = 12.844;
-    waypoint5.position.z = 0.000;
-    waypoint5.orientation.x = 0;
-    waypoint5.orientation.y = 0;
-    waypoint5.orientation.z = 0;
-    waypoint5.orientation.w = 1;
-    waypoints.push_back(waypoint5);
-
-    geometry_msgs::Pose waypoint6;//do not turn right in room
-    waypoint6.position.x = 20.786;
-    waypoint6.position.y = 12.366;
-    waypoint6.position.z = 0.000;
-    waypoint6.orientation.x = 0;
-    waypoint6.orientation.y = 0;
-    waypoint6.orientation.z = 0.012;
-    waypoint6.orientation.w = 1;
-    waypoints.push_back(waypoint6);
-
-    geometry_msgs::Pose waypoint7;//middle of the room
-    waypoint7.position.x = 18.817;
-    waypoint7.position.y = 12.808;
-    waypoint7.position.z = 0.000;
-    waypoint7.orientation.x = 0;
-    waypoint7.orientation.y = 0;
-    waypoint7.orientation.z = 0.009;
-    waypoint7.orientation.w = 1;
-    waypoints.push_back(waypoint7);
-
-    geometry_msgs::Pose waypoint8;//ready to leave the room
-    waypoint8.position.x = 19.774;
-    waypoint8.position.y = 3.839;
-    waypoint8.position.z = 0.000;
-    waypoint8.orientation.x = 0;
-    waypoint8.orientation.y = 0;
-    waypoint8.orientation.z = -0.961;
-    waypoint8.orientation.w = 0.278;
-    waypoints.push_back(waypoint8);
-
-    geometry_msgs::Pose waypoint9;//leave the room straightly
-    waypoint9.position.x = 18.106;
-    waypoint9.position.y = 3.099;
-    waypoint9.position.z = 0.000;
-    waypoint9.orientation.x = 0;
-    waypoint9.orientation.y = 0;
-    waypoint9.orientation.z = -1;
-    waypoint9.orientation.w = 0;
-    waypoints.push_back(waypoint9);*/
-
     geometry_msgs::Pose waypoint5;//bottom of U
     waypoint5.position.x = 16.840;
     waypoint5.position.y = 8.301;

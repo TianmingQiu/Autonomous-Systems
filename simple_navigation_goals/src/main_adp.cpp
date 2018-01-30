@@ -1,5 +1,6 @@
 /**
- * This node sends fixed goals to move base via ROS Action API and receives feedback via callback functions.
+ * This node gets the data from topic /scan, and calculate the fixed goals at first, 
+ * then sends fixed goals to move base via ROS Action API and receives feedback via callback functions.
  */
 
 #include <iostream>
@@ -45,19 +46,14 @@ void feedbackCb(const move_base_msgs::MoveBaseFeedbackConstPtr& feedback) {
 
 
 void processLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan_data){
-    /*double scan_raw_data[1081];
-    for(int i = 0; i<1081; i ++){
-        scan_raw_data[i] = scan_data->ranges[i];
-    }*/
 
-
+    // Only the front data form laser scanner will be used
     geometry_msgs::Pose slalom_position;
     double scan_data_def[720];
     int scan_bias = 180;
 
     // Calculate the differnce squence (remove the head and tail, only keep the 180 degrees data)
     for(int i = 0; i < 721; i++){
-        
         scan_data_def[i] = scan_data->ranges[scan_bias + i + 1] - scan_data->ranges[scan_bias + i];
     }
     
@@ -83,6 +79,7 @@ void processLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan_data){
 }
 
 
+// Get the car initial pose for coordinate transform
 void map_frame(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr& initial_pose){
 	car_map_x = initial_pose->pose.pose.position.x;
 	car_map_y = initial_pose->pose.pose.position.y;
