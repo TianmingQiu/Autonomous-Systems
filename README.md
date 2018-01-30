@@ -1,4 +1,4 @@
-# Introduction to Autonomous Systems (Technik Autonomer Systeme)
+# Introduction to Autonomous Systems  (Technik Autonomer Systeme)
 
 Tuesday, 30. January 2018
 
